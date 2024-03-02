@@ -55,12 +55,12 @@ function replaceImage(element: HTMLElement, imagePath: string, size: number) {
 
 waitForElement<HTMLTitleElement>(['title' /* title */ ], element => {
     const values = {
+        'Posts / X': 'Tweets / Twitter',
+        'post / X': 'Tweet / Twitter',
         ' on X': ' on Twitter',
         ' / X': ' / Twitter',
         'repost': 'Retweet',
-        'Quotes': 'Quote Tweets',
-        'Post': 'Tweet',
-        'post': 'Tweet'
+        'Quotes': 'Quote Tweets'
     };
 
     Object.entries(values).forEach(([key, value]) => {
@@ -87,7 +87,6 @@ waitForElements(['[data-testid="socialContext"]' /* retweeted text */ ], element
 waitForElement([
     '[data-testid="SideNav_NewTweet_Button"] span span span', // sidebar tweet button
     '[data-testid="toolBar"] > div span span', // inline tweet button
-    '[data-testid="cellInnerDiv"] span', // show new tweets button
     '[data-testid="pillLabel"] span span span', // show new tweets popup
     '[data-testid="notification"] span span' // notifications
 ], element => {
@@ -95,9 +94,15 @@ waitForElement([
     replaceText(element, 'Post', 'Tweet');
 });
 
+waitForElement(['[data-testid="cellInnerDiv"] span', /* show new tweets button */ ], element => {
+    if (element.textContent?.startsWith('Show ') && element.textContent.endsWith(' posts')) {
+        replaceText(element, 'posts', 'Tweets');
+    }
+});
+
 waitForElements([
     '[data-testid="trend"] > div > div:nth-child(3) > span', // trending tweets
-    'h2 span' // heading
+    'h2 > span', // heading
 ], element => {
     replaceText(element, 'post', 'Tweet');
     replaceText(element, 'Post', 'Tweet');
