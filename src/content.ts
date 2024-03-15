@@ -88,13 +88,16 @@ waitForElement([
     '[data-testid="SideNav_NewTweet_Button"] span span span', // sidebar tweet button
     '[data-testid="toolBar"] > div span span', // inline tweet button
     '[data-testid="pillLabel"] span span span', // show new tweets popup
-    '[data-testid="notification"] span span' // notifications
+    '[data-testid="notification"] span span', // notification title (before username)
+    '[dir="ltr"] div ~ span span', // notification title (after username)
+    '.public-DraftEditorPlaceholder-inner', // reply placeholder
+    '[aria-label="Home timeline"] h2 ~ div' // tweet counter
 ], element => {
     replaceText(element, 'post', 'Tweet');
     replaceText(element, 'Post', 'Tweet');
 });
 
-waitForElement(['[data-testid="cellInnerDiv"] span', /* show new tweets button */ ], element => {
+waitForElement(['[data-testid="cellInnerDiv"] span' /* show new tweets button */ ], element => {
     if (element.textContent?.startsWith('Show ') && element.textContent.endsWith(' posts')) {
         replaceText(element, 'posts', 'Tweets');
     }
@@ -102,8 +105,33 @@ waitForElement(['[data-testid="cellInnerDiv"] span', /* show new tweets button *
 
 waitForElements([
     '[data-testid="trend"] > div > div:nth-child(3) > span', // trending tweets
-    'h2 > span', // heading
+    'h2 > span' // heading
 ], element => {
     replaceText(element, 'post', 'Tweet');
     replaceText(element, 'Post', 'Tweet');
+});
+
+waitForElements(['[role="menuitem"] span' /* menu items */ ], element => {
+    replaceText(element, ' post', ' Tweet');
+});
+
+waitForElements(['[role="tab"] span' /* tabs */ ], element => {
+    replaceText(element, 'Reposts', 'Retweets');
+    replaceText(element, 'Quotes', 'Quote Tweets');
+    replaceText(element, 'Posts', 'Tweets');
+});
+
+waitForElement([
+    '[data-testid="empty_state_header_text"] span', // tweet engagements empty (header)
+    '[data-testid="empty_state_body_text"] span' // tweet engagements empty (body)
+], element => {
+    replaceText(element, 'Quotes', 'Quote Tweets');
+    replaceText(element, 'quoted', 'Quote Tweeted');
+    replaceText(element, 'Repost', 'Retweet');
+    replaceText(element, 'repost', 'Retweet');
+    replaceText(element, 'post', 'Tweet');
+});
+
+waitForElement<HTMLInputElement>(['[placeholder="Search"]' /* search bar placeholder */ ], element => {
+    element.placeholder = 'Search Twitter';
 });
