@@ -112,6 +112,16 @@ waitForElements([
 });
 
 waitForElements(['[role="menuitem"] span' /* menu items */ ], element => {
+    if (element.textContent === 'Quote') {
+        element.textContent = 'Quote Tweet';
+    }
+
+    if (element.textContent === 'Repost') {
+        element.textContent = 'Retweet';
+    }
+
+    replaceText(element, ' repost', ' Retweet');
+    replaceText(element, ' Quotes', ' Quote Tweets');
     replaceText(element, ' post', ' Tweet');
 });
 
