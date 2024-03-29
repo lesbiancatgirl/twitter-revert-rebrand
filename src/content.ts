@@ -91,10 +91,32 @@ waitForElement([
     '[data-testid="notification"] span span', // notification title (before username)
     '[dir="ltr"] div ~ span span', // notification title (after username)
     '.public-DraftEditorPlaceholder-inner', // reply placeholder
-    '[aria-label="Home timeline"] h2 ~ div' // tweet counter
 ], element => {
     replaceText(element, 'post', 'Tweet');
     replaceText(element, 'Post', 'Tweet');
+});
+
+waitForElement(['[aria-label="Home timeline"] h2 ~ div' /* tweet counter */ ], element => {
+    const json = JSON.parse(document.head.querySelector('[data-testid="UserProfileSchema-test"]')?.innerHTML ?? '{}');
+    const tweets: number = json.author?.interactionStatistic?.at(-1)?.userInteractionCount || -1;
+
+    if (!element.textContent?.includes('posts') && !element.textContent?.includes('Tweets')) {
+        return;
+    }
+
+    if (tweets === -1) {
+        replaceText(element, 'posts', 'Tweets');
+    } else if (tweets < 1000) {
+        element.textContent = `${tweets} Tweets`;
+    } else if (tweets < 10_000) {
+        element.textContent = `${tweets.toString().slice(0, 1)},${tweets.toString().slice(1)} Tweets`;
+    } else if (tweets < 1_000_000) {
+        const formattedNumber = (tweets / 1000).toFixed(1)
+        element.textContent = `${formattedNumber.endsWith('.0') ? (tweets / 1000).toFixed(0) : formattedNumber}K Tweets`;
+    } else {
+        const formattedNumber = (tweets / 1_000_000).toFixed(1)
+        element.textContent = `${formattedNumber.endsWith('.0') ? (tweets / 1_000_000).toFixed(0) : formattedNumber}M Tweets`;
+    }
 });
 
 waitForElement(['[data-testid="cellInnerDiv"] span' /* show new tweets button */ ], element => {

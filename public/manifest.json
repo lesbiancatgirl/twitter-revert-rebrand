@@ -3,7 +3,7 @@
     "name": "Twitter Revert Rebrand",
     "description": "Chrome extension to revert the Twitter UI to the pre-Musk era",
     "homepage_url": "https://github.com/lesbiancatgirl/twitter-revert-rebrand",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "icons": {
         "128": "images/twitter-128.png"
     },
