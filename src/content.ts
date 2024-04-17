@@ -125,12 +125,15 @@ waitForElement(['[data-testid="cellInnerDiv"] span' /* show new tweets button */
     }
 });
 
-waitForElements([
-    '[data-testid="trend"] > div > div:nth-child(3) > span', // trending tweets
-    'h2 > span' // heading
-], element => {
+waitForElements(['[data-testid="trend"] > div > div:nth-child(3) > span' /* trending tweets */ ], element => {
     replaceText(element, 'post', 'Tweet');
-    replaceText(element, 'Post', 'Tweet');
+});
+
+waitForElements(['h2 > span' /* heading */ ], element => {
+    if (document.querySelector('[aria-label="Home timeline"] h2 ~ div')?.textContent?.slice(1) !== window.location.pathname.slice(1).split('/', 1)[0]) {
+        replaceText(element, 'post', 'Tweet');
+        replaceText(element, 'Post', 'Tweet');
+    }
 });
 
 waitForElements(['[role="menuitem"] span' /* menu items */ ], element => {
