@@ -9,10 +9,10 @@
     },
     "content_scripts": [{
         "js": ["content.js"],
-        "matches": ["https://twitter.com/*"]
+        "matches": ["https://twitter.com/*", "https://x.com/*"]
     }],
     "web_accessible_resources": [{
         "resources": ["images/*"],
-        "matches": ["https://twitter.com/*"]
+        "matches": ["https://twitter.com/*", "https://x.com/*"]
     }]
 }
