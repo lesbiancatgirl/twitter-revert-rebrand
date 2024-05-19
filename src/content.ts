@@ -53,6 +53,10 @@ function replaceImage(element: HTMLElement, imagePath: string, size: number) {
 
 
 
+if (window.location.hostname === 'x.com') {
+    window.location.href = `https://twitter.com${window.location.pathname}?mx=1`;
+}
+
 waitForElement<HTMLTitleElement>(['title' /* title */ ], element => {
     const values = {
         'Posts / X': 'Tweets / Twitter',
