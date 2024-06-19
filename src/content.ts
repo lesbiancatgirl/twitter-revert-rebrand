@@ -140,6 +140,12 @@ waitForElements(['h2 > span' /* heading */ ], element => {
     }
 });
 
+waitForElements(['[role="tablist"] > [role="presentation"]' /* user profile tabs */ ], element => {
+    if (['Subs', 'Highlights', 'Articles'].includes(element.querySelector('span')?.textContent || '')) {
+        element.remove()
+    }
+});
+
 waitForElements(['[role="menuitem"] span' /* menu items */ ], element => {
     if (element.textContent === 'Quote') {
         element.textContent = 'Quote Tweet';
