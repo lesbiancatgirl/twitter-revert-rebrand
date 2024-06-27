@@ -140,9 +140,19 @@ waitForElements(['h2 > span' /* heading */ ], element => {
     }
 });
 
-waitForElements(['[role="tablist"] > [role="presentation"]' /* user profile tabs */ ], element => {
-    if (['Subs', 'Highlights', 'Articles'].includes(element.querySelector('span')?.textContent || '')) {
-        element.remove()
+waitForElements(['[role="tablist"] > [role="presentation"]' /* tabs */ ], element => {
+    const span = element.querySelector('span');
+
+    if (!span) {
+        return;
+    }
+
+    replaceText(span, 'Reposts', 'Retweets');
+    replaceText(span, 'Quotes', 'Quote Tweets');
+    replaceText(span, 'Posts', 'Tweets');
+
+    if (['Subs', 'Highlights', 'Articles', 'Verified Followers', 'Subscriptions', 'Verified'].includes(span.textContent || '')) {
+        element.remove();
     }
 });
 
@@ -158,12 +168,6 @@ waitForElements(['[role="menuitem"] span' /* menu items */ ], element => {
     replaceText(element, ' repost', ' Retweet');
     replaceText(element, ' Quotes', ' Quote Tweets');
     replaceText(element, ' post', ' Tweet');
-});
-
-waitForElements(['[role="tab"] span' /* tabs */ ], element => {
-    replaceText(element, 'Reposts', 'Retweets');
-    replaceText(element, 'Quotes', 'Quote Tweets');
-    replaceText(element, 'Posts', 'Tweets');
 });
 
 waitForElement([
